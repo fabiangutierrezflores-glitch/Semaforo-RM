@@ -10,7 +10,6 @@
   :root {
     --navy:     #1C2149;
     --blue:     #1D2C93;
-    --blue-lt:  #E1E7FF;
     --surface:  #F7F8FC;
     --border:   #DDE2EF;
     --text:     #1E293B;
@@ -20,7 +19,6 @@
     --green-bg: #E8F5EE; --green:  #2E7D51;
     --yel-bg:   #FEF8E7; --yellow: #8A6A00;
     --red-bg:   #FDECEA; --red:    #B94040;
-    --gray-bg:  #F0F2F8; --gray:   #94A3B8;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -32,7 +30,6 @@
     min-height: 100vh;
   }
 
-  /* ── TOPBAR ── */
   .topbar {
     background: var(--navy);
     height: 56px;
@@ -54,8 +51,6 @@
     color: rgba(255,255,255,.9);
   }
 
-  .brand span { color: rgba(255,255,255,.3); font-weight: 400; margin: 0 8px; }
-
   .topbar-right {
     display: flex;
     align-items: center;
@@ -74,16 +69,10 @@
 
   @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
 
-  /* ── WRAP ── */
   .wrap {
     max-width: 1100px;
     margin: 0 auto;
     padding: 44px 28px 72px;
-  }
-
-  /* ── PAGE HEADER ── */
-  .page-header {
-    margin-bottom: 36px;
   }
 
   .page-label {
@@ -100,7 +89,7 @@
     font-weight: 800;
     color: var(--navy);
     letter-spacing: -.02em;
-    margin-bottom: 6px;
+    margin-bottom: 8px;
   }
 
   .page-sub {
@@ -110,9 +99,9 @@
     display: flex;
     align-items: center;
     gap: 8px;
+    margin-bottom: 36px;
   }
 
-  /* ── GRID ── */
   .grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -120,7 +109,6 @@
     margin-bottom: 28px;
   }
 
-  /* ── CARD ── */
   .card {
     background: var(--white);
     border-radius: 14px;
@@ -146,7 +134,6 @@
   .card:nth-child(2) { animation-delay: .12s; }
   .card:nth-child(3) { animation-delay: .19s; }
 
-  /* Card header */
   .card-header {
     display: flex;
     align-items: center;
@@ -170,7 +157,6 @@
     border-radius: 20px;
   }
 
-  /* Card value */
   .card-value-row {
     display: flex;
     align-items: flex-end;
@@ -192,7 +178,6 @@
     padding-bottom: 12px;
   }
 
-  /* Card footer */
   .card-footer {
     border-top: 1px solid #F0F2F8;
     padding-top: 16px;
@@ -214,7 +199,6 @@
     font-weight: 500;
   }
 
-  /* ── LEGEND ── */
   .legend {
     display: flex;
     gap: 28px;
@@ -236,12 +220,8 @@
     color: var(--text);
   }
 
-  .leg-dot {
-    width: 9px; height: 9px;
-    border-radius: 50%;
-  }
+  .leg-dot { width: 9px; height: 9px; border-radius: 50%; }
 
-  /* ── REFRESH BTN ── */
   .btn {
     display: block;
     margin: 0 auto;
@@ -262,20 +242,6 @@
   .btn:hover  { background: var(--blue); }
   .btn:active { transform: scale(.98); }
 
-  /* ── ERROR ── */
-  .error-box {
-    background: var(--white);
-    border: 1px solid var(--border);
-    border-left: 5px solid var(--red);
-    border-radius: 14px;
-    padding: 40px;
-    text-align: center;
-    color: var(--dim);
-    font-size: 13px;
-    grid-column: 1 / -1;
-  }
-
-  /* ── LOADING ── */
   .spinner {
     width: 28px; height: 28px;
     border: 3px solid var(--border);
@@ -289,24 +255,20 @@
 </head>
 <body>
 
-<!-- TOPBAR -->
 <div class="topbar">
-  <div class="brand">
-    Laboratorio Blanco <span>·</span> Jefatura de Imágenes
-  </div>
+  <div class="brand">Laboratorio Blanco</div>
   <div class="topbar-right">
     <div class="live-dot"></div>
     Actualización automática cada 30s
   </div>
 </div>
 
-<!-- CONTENIDO -->
 <div class="wrap">
-
-  <div class="page-header">
-    <div class="page-label">Resonancia Magnética</div>
-    <div class="page-title">Semáforo de Atrasos</div>
-    <div class="page-sub" id="lastRead">Cargando datos...</div>
+  <div class="page-label">Resonancia Magnética</div>
+  <div class="page-title">Semáforo de Atrasos</div>
+  <div class="page-sub" id="lastRead">
+    <span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#DDE2EF;vertical-align:middle"></span>
+    Cargando datos...
   </div>
 
   <div class="grid" id="grid">
@@ -323,13 +285,11 @@
   </div>
 
   <button class="btn" onclick="location.reload()">↺ &nbsp; Actualizar ahora</button>
-
 </div>
 
 <script>
-// ── CONFIG ────────────────────────────────────────────────
-const SHEET_ID   = '1noHtMRHY5ZsTczr1kxfNERK3rLmlyPOxhGoqZUkUdyU';
-const SHEET_NAME = 'Registro';
+const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTQNTPK6suGKeLf4f8bNnQzuh7JKLl5XHsFBbwh9w4Ll-QaCvV8KMqeZOyF0Gro4goSlk91gZuK4lD6/pub?gid=193555807&single=true&output=csv';
+
 const SALAS = [
   { key: 'M2', label: 'RM 2' },
   { key: 'M3', label: 'RM 3' },
@@ -338,13 +298,8 @@ const SALAS = [
 const UMBRAL_VERDE    = 20;
 const UMBRAL_AMARILLO = 40;
 
-// ── FETCH CSV ─────────────────────────────────────────────
-function csvUrl() {
-  return `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(SHEET_NAME)}`;
-}
-
 async function fetchCSV() {
-  const res = await fetch(csvUrl());
+  const res = await fetch(CSV_URL);
   if (!res.ok) throw new Error('HTTP ' + res.status);
   return res.text();
 }
@@ -392,7 +347,6 @@ function buildMap(rows) {
   return Object.keys(map).length > 0 ? map : null;
 }
 
-// ── COLOR ─────────────────────────────────────────────────
 function getStyle(min) {
   if (isNaN(min) || min === null) return {
     borderColor: '#DDE2EF', badgeBg: '#F0F2F8', badgeColor: '#94A3B8',
@@ -419,12 +373,11 @@ function formatTs(raw) {
   return d.toLocaleString('es-CL', { day:'2-digit', month:'2-digit', year:'numeric', hour:'2-digit', minute:'2-digit' });
 }
 
-// ── RENDER ────────────────────────────────────────────────
 function render(map) {
   const grid = document.getElementById('grid');
 
   if (!map) {
-    grid.innerHTML = `<div class="error-box">
+    grid.innerHTML = `<div style="grid-column:1/-1;background:#fff;border:1px solid #DDE2EF;border-left:5px solid #B94040;border-radius:14px;padding:40px;text-align:center;color:#94A3B8;font-size:13px">
       <div style="font-size:24px;margin-bottom:12px">⚠</div>
       <div style="font-weight:600;color:#1C2149;margin-bottom:6px">No se pudo cargar la hoja</div>
       <div style="font-size:12px">Verifica que la hoja esté publicada en la web como CSV</div>
@@ -434,11 +387,11 @@ function render(map) {
 
   let html = '';
   SALAS.forEach((s, i) => {
-    const data  = map[s.key] || null;
-    const min   = data ? data.min : NaN;
-    const ts    = data ? formatTs(data.ts) : null;
-    const st    = getStyle(isNaN(min) ? null : min);
-    const disp  = isNaN(min) ? '—' : min;
+    const data = map[s.key] || null;
+    const min  = data ? data.min : NaN;
+    const ts   = data ? formatTs(data.ts) : null;
+    const st   = getStyle(isNaN(min) ? null : min);
+    const disp = isNaN(min) ? '—' : min;
 
     html += `
     <div class="card" style="border-left-color:${st.borderColor};animation-delay:${i*0.08}s">
@@ -465,7 +418,6 @@ function render(map) {
     `Última lectura: <strong style="color:#1C2149">${now}</strong>`;
 }
 
-// ── MAIN ──────────────────────────────────────────────────
 async function refresh() {
   try {
     const text = await fetchCSV();
